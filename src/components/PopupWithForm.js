@@ -1,13 +1,13 @@
 function PopupWithForm(props){
 
-    const handleClose = props.isClose;
+    const handleClose = props.onClose;
 
     if(props.isOpen){
         return(
             <div className={`popup popup_type_${props.name} popup_opened`} >
                 <div className={`popup__content-${props.name}`}>
                     <button aria-label="Close" type="button"
-                            className="popup__close-button" onClick={handleClose}></button>
+                            className="popup__close-button" onClick={handleClose}/>
                     <h2 className="popup__header">{props.title}</h2>
                     <form className={`popup__form popup__form-${props.name}`} name={props.name}>
                         {props.children}
@@ -21,8 +21,7 @@ function PopupWithForm(props){
         return(
             <div className={`popup popup_type_${props.name}`} >
                 <div className={`popup__content-${props.name}`}>
-                    <button aria-label="Close" type="button"
-                            className="popup__close-button"></button>
+                    <button aria-label="Close" type="button" className="popup__close-button"/>
                     <h2 className="popup__header">{props.title}</h2>
                     <form className={`popup__form popup__form-${props.name}`} name={props.name}>
                         {props.children}
