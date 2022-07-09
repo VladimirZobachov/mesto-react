@@ -1,4 +1,11 @@
+import {useState} from "react";
+import api from '../utils/api';
+
 function Main(props) {
+
+    const [userName, setUserName] = useState('');
+    const [userDescription, setUserDescription] = useState('');
+    const [userAvatar, setUserAvatar] = useState('');
 
     return (
         <>
