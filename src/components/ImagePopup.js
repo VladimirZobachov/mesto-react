@@ -1,4 +1,4 @@
-function PopupWithImage(props) {
+function ImagePopup(props) {
     const handleClose = props.onClose;
 
     if(props.card){
@@ -27,4 +27,4 @@ function PopupWithImage(props) {
 
 }
 
-export default PopupWithImage;
+export default ImagePopup;

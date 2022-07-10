@@ -3,7 +3,7 @@ import Header from './Header';
 import Main from './Main';
 import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
-import PopupWithImage from "./PopupWithImage";
+import ImagePopup from "./ImagePopup";
 
 function App() {
     const handleEditAvatarClick = ()=>{
@@ -84,7 +84,7 @@ function App() {
           <span className="popup__error-message popup__error-message_img"/>
       </PopupWithForm>
 
-      <PopupWithImage card={selectedCard} onClose={closeAllPopups}/>
+      <ImagePopup card={selectedCard} onClose={closeAllPopups}/>
 
       <div className="popup popup_type_del-card">
         <div className="popup__content-del-card">
