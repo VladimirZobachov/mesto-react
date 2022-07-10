@@ -20,6 +20,7 @@ function Main(props) {
             .catch((err) => {
                 console.log(err);
             });
+
         api.getInitialCards()
             .then((cards)=>{
                 setCards(cards);
@@ -28,7 +29,7 @@ function Main(props) {
                 console.log(err);
             });
 
-    })
+    }, []);
 
     return (
         <>
@@ -53,6 +54,7 @@ function Main(props) {
                         {cards.map((item)=>{
                             return(
                                 <Card
+                                    key={cards.indexOf(item)}
                                     card={item}
                                     onCardClick={props.onCardClick}
                                 />

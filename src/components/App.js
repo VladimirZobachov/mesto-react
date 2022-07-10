@@ -4,7 +4,6 @@ import Main from './Main';
 import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
 import PopupWithImage from "./PopupWithImage";
-import '../App.css';
 
 function App() {
     const handleEditAvatarClick = ()=>{

@@ -19,7 +19,7 @@ function PopupWithImage(props) {
                     <button aria-label="Close" type="button"
                             className="popup__close-button popup__close-button_type_img"/>
                     <img className="popup__gallery-img" alt=""/>
-                    <h2 className="popup__title-img"/>
+                    <h2 className="popup__title-img">{props.card.name}</h2>
                 </div>
             </div>
         );
