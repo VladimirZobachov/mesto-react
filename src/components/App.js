@@ -6,44 +6,54 @@ import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 
 function App() {
+    const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
+    const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
+    const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+    const [isDelPlacePopupOpen, setIsDelPlacePopupOpen] = useState(false);
+    const [selectedCard, setSelectedCard] = useState({name: '', link: ''});
+
     const handleEditAvatarClick = ()=>{
         setEditAvatar(true);
-    }
 
+    }
     const handleEditProfileClick = ()=>{
         setEditProfile(true);
-    }
 
+    }
     const handleAddPlaceClick = ()=>{
         setAddPlace(true);
-    }
 
+    }
+    const handleDelPlaceClick = ()=>{
+        setDelPlace(true);
+
+    }
     const handleCardClick = (card)=>{
         setSelectedCard(card);
-    }
 
+    }
     const closeAllPopups = ()=>{
         setEditAvatar(false);
         setEditProfile(false);
         setAddPlace(false);
-        setSelectedCard('');
+        setSelectedCard({name: '', link: ''});
+
     }
 
-    const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
-    const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
-    const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
-    const [selectedCard, setSelectedCard] = useState('');
-
     function setEditProfile(value){
-        setEditProfilePopupOpen(value);
+        setIsEditProfilePopupOpen(value);
     }
 
     function setAddPlace(value){
-        setAddPlacePopupOpen(value);
+        setIsAddPlacePopupOpen(value);
+    }
+
+    function setDelPlace(value){
+        setIsDelPlacePopupOpen(value);
     }
 
     function setEditAvatar(value){
-        setEditAvatarPopupOpen(value);
+        setIsEditAvatarPopupOpen(value);
     }
 
   return (
@@ -54,6 +64,7 @@ function App() {
       <Main
           onEditProfile={handleEditProfileClick}
           onAddPlace={handleAddPlaceClick}
+          onDelPlace={handleDelPlaceClick}
           onEditAvatar={handleEditAvatarClick}
           onCardClick={handleCardClick}
       />
@@ -86,16 +97,7 @@ function App() {
 
       <ImagePopup card={selectedCard} onClose={closeAllPopups}/>
 
-      <div className="popup popup_type_del-card">
-        <div className="popup__content-del-card">
-          <button aria-label="Close" type="button"
-                  className="popup__close-button popup__close-button_type_img"/>
-          <h2 className="popup__header">Вы уверены?</h2>
-          <form className="popup__form popup__form-card" name="popup-form">
-            <button aria-label="saveForm" type="submit" className="popup__button">Да</button>
-          </form>
-        </div>
-      </div>
+      <PopupWithForm title="Вы уверены?" name="del-card" titleButton="Да" isOpen={isDelPlacePopupOpen} onClose={closeAllPopups}/>
 
       </>
   );

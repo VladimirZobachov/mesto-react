@@ -32,7 +32,6 @@ function Main(props) {
     }, []);
 
     return (
-        <>
             <main className="content">
                 <section className="profile">
                     <div className="profile__avatar" style={{ backgroundImage: `url(${userAvatar})` }} >
@@ -54,16 +53,16 @@ function Main(props) {
                         {cards.map((item)=>{
                             return(
                                 <Card
-                                    key={cards.indexOf(item)}
+                                    key={item._id}
                                     card={item}
                                     onCardClick={props.onCardClick}
+                                    onDelClick={props.onDelPlace}
                                 />
                             )
                         })}
                     </ul>
                 </section>
             </main>
-        </>
     );
 }
 

@@ -2,9 +2,10 @@ function Card(props) {
     function handleClick() {
         props.onCardClick(props.card);
     }
+
     return(
         <li className="gallery__item">
-            <button arria-lable="Del" type="button" className="gallery__del-button"/>
+            <button arria-lable="Del" type="button" className="gallery__del-button" onClick={props.onDelClick}/>
             <img className="gallery__img" alt={props.card.link} src={props.card.link} onClick={handleClick}/>
             <div className="gallery__item-info">
                 <h2 className="gallery__item-title">{props.card.name}</h2>
