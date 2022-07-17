@@ -60,6 +60,7 @@ class Api{
         })
         .then(this._check);
     }
+
     addLike(id){
         return fetch(`${this._options.baseUrl}/cards/${id}/likes`, {
             method: 'PUT',
@@ -67,6 +68,7 @@ class Api{
         })
         .then(this._check);
     }
+
     delLike(id){
         return fetch(`${this._options.baseUrl}/cards/${id}/likes`, {
             method: 'DELETE',
@@ -74,6 +76,23 @@ class Api{
         })
         .then(this._check);
     }
+
+    changeLikeCardStatus(id, isLiked){
+        if(isLiked){
+            return fetch(`${this._options.baseUrl}/cards/${id}/likes`, {
+                method: 'PUT',
+                headers: this._options.headers
+            })
+            .then(this._check);
+        }else{
+            return fetch(`${this._options.baseUrl}/cards/${id}/likes`, {
+                method: 'DELETE',
+                headers: this._options.headers
+            })
+            .then(this._check);
+        }
+    }
+
     delCard(id) {
         return fetch(`${this._options.baseUrl}/cards/${id}`, {
             method: 'DELETE',

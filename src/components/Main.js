@@ -21,6 +21,14 @@ function Main(props) {
 
     }, []);
 
+    function handleCardLike(card) {
+        const isLiked = card.likes.some(i => i._id === currentUser._id);
+
+        api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
+            setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+        });
+    }
+
     return (
             <main className="content">
                 <section className="profile">
@@ -47,6 +55,7 @@ function Main(props) {
                                     card={item}
                                     onCardClick={props.onCardClick}
                                     onDelClick={props.onDelPlace}
+                                    onCardLike={handleCardLike}
                                 />
                             )
                         })}
