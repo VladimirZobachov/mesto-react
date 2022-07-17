@@ -1,9 +1,11 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import Header from './Header';
 import Main from './Main';
 import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
+import api from "../utils/api";
+import {CurrentUserContext} from "../contexts/CurrentUserContext";
 
 function App() {
     const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -11,6 +13,17 @@ function App() {
     const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
     const [isDelPlacePopupOpen, setIsDelPlacePopupOpen] = useState(false);
     const [selectedCard, setSelectedCard] = useState({name: '', link: ''});
+    const [currentUser, setCurrentUser] = useState('');
+
+    useEffect(()=>{
+        api.getUser()
+            .then((user)=>{
+                setCurrentUser(user);
+            })
+            .catch((err)=>{
+                console.log(err);
+            })
+    }, [])
 
     const handleEditAvatarClick = ()=>{
         setEditAvatar(true);
@@ -57,8 +70,8 @@ function App() {
     }
 
   return (
+      <CurrentUserContext.Provider value={currentUser}>
       <>
-
       <Header/>
 
       <Main
@@ -100,6 +113,7 @@ function App() {
       <PopupWithForm title="Вы уверены?" name="del-card" titleButton="Да" isOpen={isDelPlacePopupOpen} onClose={closeAllPopups}/>
 
       </>
+      </CurrentUserContext.Provider>
   );
 }
 
