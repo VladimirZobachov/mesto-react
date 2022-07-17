@@ -5,7 +5,7 @@ function Card(props) {
     const currentUser = useContext(CurrentUserContext);
     const isOwn = props.card.owner._id === currentUser._id;
     const cardDeleteButtonClassName = (
-        `${isOwn ? 'card__delete-button-active' : 'gallery__del-button'}`
+        `gallery__del-button ${isOwn ? 'gallery__del-button-active' : ''}`
     );
     const isLiked = props.card.likes.some(i => i._id === currentUser._id);
     const cardLikeButtonClassName = `gallery__like_type_is-active`;
@@ -16,10 +16,13 @@ function Card(props) {
     function handleLikeClick(){
         props.onCardLike(props.card);
     }
+    function handleDeleteClick(){
+        props.onCardDelete(props.card);
+    }
 
     return(
         <li className="gallery__item">
-            <button arria-lable="Del" type="button" className={cardDeleteButtonClassName} onClick={props.onDelClick}/>
+            <button arria-lable="Del" type="button" className={cardDeleteButtonClassName} onClick={handleDeleteClick}/>
             <img className="gallery__img" alt={props.card.link} src={props.card.link} onClick={handleClick}/>
             <div className="gallery__item-info">
                 <h2 className="gallery__item-title">{props.card.name}</h2>
