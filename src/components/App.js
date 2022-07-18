@@ -8,6 +8,7 @@ import ImagePopup from "./ImagePopup";
 import api from "../utils/api";
 import {CurrentUserContext} from "../contexts/CurrentUserContext";
 import EditAvatarPopup from "./EditAvatarPopup";
+import AddPlacePopup from "./AddPlacePopup";
 
 function App() {
     const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -16,6 +17,7 @@ function App() {
     const [isDelPlacePopupOpen, setIsDelPlacePopupOpen] = useState(false);
     const [selectedCard, setSelectedCard] = useState({name: '', link: ''});
     const [currentUser, setCurrentUser] = useState('');
+    const [cards, setCards] = useState([]);
 
     useEffect(()=>{
         api.getUser()
@@ -25,6 +27,13 @@ function App() {
             .catch((err)=>{
                 console.log(err);
             })
+        api.getInitialCards()
+            .then((cards)=>{
+                setCards(cards);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     }, [])
 
     const handleEditAvatarClick = ()=>{
@@ -53,6 +62,21 @@ function App() {
         setAddPlace(false);
         setSelectedCard({name: '', link: ''});
 
+    }
+
+    function handleCardLike(card) {
+        const isLiked = card.likes.some(i => i._id === currentUser._id);
+        api.changeLikeCardStatus(card._id, !isLiked)
+            .then((newCard) => {
+                setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+            });
+    }
+
+    function handleCardDelete(card){
+        api.delCard(card._id)
+            .then(()=>{
+                setCards(cards.filter(item=>item !== card));
+            })
     }
 
     function setEditProfile(value){
@@ -87,6 +111,15 @@ function App() {
             })
     }
 
+    function handleAddPlace(newCard){
+        api.addCard(newCard.name, newCard.link)
+            .then((card)=> {
+                setCards([card, ...cards]);
+                closeAllPopups();
+            })
+
+    }
+
   return (
       <CurrentUserContext.Provider value={currentUser}>
       <>
@@ -98,6 +131,9 @@ function App() {
           onDelPlace={handleDelPlaceClick}
           onEditAvatar={handleEditAvatarClick}
           onCardClick={handleCardClick}
+          cards={cards}
+          onCardLike={handleCardLike}
+          onCardDelete={handleCardDelete}
       />
 
       <Footer/>
@@ -106,14 +142,7 @@ function App() {
 
       <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar}/>
 
-      <PopupWithForm title="Новое место" name="new-card" titleButton="Сохранить" isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
-          <input type="text" className="popup__input popup__input_type_title" placeholder="Название" name="title"
-                 id="title" required minLength="2" maxLength="30"/>
-          <span className="popup__error-message popup__error-message_title"/>
-          <input type="url" className="popup__input popup__input_type_img" placeholder="Ссылка на картинку"
-                 name="img" id="img" required/>
-          <span className="popup__error-message popup__error-message_img"/>
-      </PopupWithForm>
+      <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlace}></AddPlacePopup>
 
       <ImagePopup card={selectedCard} onClose={closeAllPopups}/>
 
