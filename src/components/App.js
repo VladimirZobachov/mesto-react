@@ -36,6 +36,9 @@ function App() {
             });
     }, [])
 
+
+
+
     const handleEditAvatarClick = ()=>{
         setEditAvatar(true);
 
@@ -69,14 +72,20 @@ function App() {
         api.changeLikeCardStatus(card._id, !isLiked)
             .then((newCard) => {
                 setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+            })
+            .catch((err)=>{
+                console.log(err);
             });
     }
 
     function handleCardDelete(card){
         api.delCard(card._id)
             .then(()=>{
-                setCards(cards.filter(item=>item !== card));
+                setCards((state) => state.filter((c) => c._id !== card._id));
             })
+            .catch((err)=>{
+                console.log(err);
+            });
     }
 
     function setEditProfile(value){
@@ -101,6 +110,9 @@ function App() {
                 setCurrentUser(user);
                 closeAllPopups();
             })
+            .catch((err)=>{
+                console.log(err);
+            });
     }
 
     function handleUpdateAvatar(user){
@@ -109,6 +121,9 @@ function App() {
                 setCurrentUser(user);
                 closeAllPopups();
             })
+            .catch((err)=>{
+                console.log(err);
+            });
     }
 
     function handleAddPlace(newCard){
@@ -117,12 +132,15 @@ function App() {
                 setCards([card, ...cards]);
                 closeAllPopups();
             })
+            .catch((err)=>{
+                console.log(err);
+            });
 
     }
 
   return (
       <CurrentUserContext.Provider value={currentUser}>
-      <>
+
       <Header/>
 
       <Main
@@ -148,7 +166,6 @@ function App() {
 
       <PopupWithForm title="Вы уверены?" name="del-card" titleButton="Да" isOpen={isDelPlacePopupOpen} onClose={closeAllPopups}/>
 
-      </>
       </CurrentUserContext.Provider>
   );
 }

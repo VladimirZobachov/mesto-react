@@ -1,5 +1,6 @@
 import PopupWithForm from "./PopupWithForm";
 import {useRef} from "react";
+import {useEffect} from "react";
 
 function AddPlacePopup(props){
 
@@ -14,6 +15,11 @@ function AddPlacePopup(props){
             link: linkRef.current.value,
         });
     }
+
+    useEffect(() => {
+        nameRef.current.value = '';
+        linkRef.current.value = '';
+    }, [props.isOpen]);
 
     return(
         <PopupWithForm title="Новое место" name="new-card" titleButton="Сохранить"
